@@ -1,2 +1,2 @@
-"""AQR Stream: continuous hypothesis generation."""
-__version__ = "0.1.0"
+"""AQR — thin pipeline for MOEX quant research: natural-language goal -> validated hypotheses."""
+__version__ = "0.2.0"

@@ -4,53 +4,47 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aqr"
-version = "0.1.0"
-description = "LLM-driven quantitative research framework for MOEX markets, with rigorous statistical validation"
+version = "0.2.0"
+description = "Thin pipeline: natural-language goal -> validated hypotheses on MOEX"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 authors = [{ name = "Vadim Rybalko" }]
 requires-python = ">=3.11"
-keywords = ["quantitative-finance", "moex", "llm", "backtest", "deflated-sharpe", "cpcv"]
+keywords = ["quantitative-finance", "moex", "backtest", "deflated-sharpe", "cpcv"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Financial and Insurance Industry",
-    "Intended Audience :: Science/Research",
     "License :: OSI Approved :: Apache Software License",
-    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-    "Topic :: Office/Business :: Financial :: Investment",
-    "Topic :: Scientific/Engineering :: Information Analysis",
 ]
+
+# Ядро — минимум, без которого ничего не работает
 dependencies = [
     "numpy>=1.26",
     "pandas>=2.1",
     "scipy>=1.11",
-    "duckdb>=1.0",
     "requests>=2.31",
-    "typer>=0.12",
-    "pyyaml>=6.0",
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "pydantic>=2.0",
 ]
 
 [project.optional-dependencies]
+# LLM-режим планировщика и нарратора (fallback работает без этого)
 llm = [
-    "anthropic>=0.34",
-    "openai>=1.40",
     "litellm>=1.45",
-    "faiss-cpu>=1.7",
 ]
-stream = [
-    "redis>=5.0",
-    "fastapi>=0.110",
-    "uvicorn>=0.29",
-    "sse-starlette>=2.0",
+# Point-in-time data manifest (пока не подключён к pipeline, но модуль есть)
+data = [
+    "duckdb>=1.0",
 ]
+# Разработка
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
     "ruff>=0.5",
-    "mypy>=1.10",
-    "pre-commit>=3.7",
+    "httpx>=0.27",
 ]
 
 [project.urls]
@@ -58,7 +52,7 @@ Repository = "https://github.com/vadryb13/aqr"
 Issues = "https://github.com/vadryb13/aqr/issues"
 
 [project.scripts]
-aqr = "aqr.cli:app"
+aqr = "aqr.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["aqr*"]
@@ -74,5 +68,5 @@ line-length = 100
 target-version = "py311"
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "I", "UP", "B", "C4", "SIM"]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
 ignore = ["E501", "B008", "SIM108"]
