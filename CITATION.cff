@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: "AQR: Auto Quant Research"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - given-names: Vadim
+    family-names: Rybalko
+    orcid: ""
+repository-code: "https://github.com/vadryb13/aqr"
+abstract: >-
+  AQR is an open-source LLM-driven quantitative research framework for
+  MOEX (Moscow Exchange) markets. It generates trading hypotheses at scale,
+  backtests them with rigorous statistical corrections (Deflated Sharpe Ratio,
+  Combinatorial Purged Cross-Validation, Probability of Backtest Overfitting),
+  and accumulates validated knowledge in a hierarchical memory system.
+keywords:
+  - quantitative-finance
+  - moex
+  - llm-agents
+  - backtest
+  - deflated-sharpe
+  - cpcv
+license: Apache-2.0
+version: 0.1.0
+date-released: 2026-07-10

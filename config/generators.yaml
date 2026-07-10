@@ -1,0 +1,49 @@
+# Конфиг фабрики (может быть загружен вместо defaults в orchestrator.py)
+generators:
+  - name: explorer-1
+    type: explorer
+    model: claude-sonnet-4-5
+    temperature: 1.0
+    max_hyp_per_call: 5
+    calls_per_minute: 6
+    daily_budget_usd: 15
+
+  - name: exploiter-1
+    type: exploiter
+    model: claude-haiku-4
+    temperature: 0.7
+    max_hyp_per_call: 20
+    calls_per_minute: 30
+    daily_budget_usd: 15
+
+  - name: exploiter-2
+    type: exploiter
+    model: gpt-4o-mini
+    temperature: 0.9
+    max_hyp_per_call: 20
+    calls_per_minute: 30
+    daily_budget_usd: 10
+
+  - name: mutator-1
+    type: mutator
+    model: claude-haiku-4
+    temperature: 0.8
+    max_hyp_per_call: 10
+    calls_per_minute: 15
+    daily_budget_usd: 5
+
+workers:
+  count: 10
+  batch_size: 5
+
+insight_loop:
+  interval_seconds: 3600
+  min_results_required: 50
+  model: claude-sonnet-4-5
+
+budget:
+  daily_limit_usd: 50
+  stop_at_pct: 90
+
+dedup:
+  threshold: 0.15   # cosine distance
