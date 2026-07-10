@@ -11,10 +11,12 @@ from .events import EventBus, Event
 from .planner import ChatPlanner, ResearchPlan
 from .executor import PipelineExecutor, PipelineResult
 from .narrator import Narrator
+from .reviewer import InsightReviewer
 
 __all__ = [
     "EventBus", "Event",
     "ChatPlanner", "ResearchPlan",
     "PipelineExecutor", "PipelineResult",
     "Narrator",
+    "InsightReviewer",
 ]

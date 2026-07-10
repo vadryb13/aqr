@@ -150,9 +150,18 @@ class PipelineExecutor:
                 elapsed_seconds=time.time() - t0,
             )
 
-            # Инсайты (детерминистичные наблюдения)
-            for insight in self._extract_insights(result):
+            # Инсайты: сначала детерминистичные, потом LLM-review
+            det_insights = self._extract_insights(result)
+            for insight in det_insights:
                 await self._emit(run_id, "insight", "Инсайт", insight)
+
+            # LLM-review: если модель доступна, добавляем 0-3 наблюдения;
+            # без ключа или при ошибке тихо возвращает [] — пайплайн не ломается.
+            from .reviewer import InsightReviewer
+            reviewer = InsightReviewer()
+            extra = reviewer.review(result, det_insights)
+            for obs in extra:
+                await self._emit(run_id, "insight", "Аналитик", obs, {"source": "llm"})
 
             # Нарратив
             from .narrator import Narrator
